@@ -1,38 +1,39 @@
-.App {
-  text-align: center;
+.typeapp_1_div{
+  background-color: red;
+  background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
+  width:80%;
+  margin: 10% auto 10% auto;
+  border-radius: 10px;
+  padding: 3%;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.bt{
+  margin-top: 20px ;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.timer{
+  float:right;
+  margin-right: 3px;
+  color:aliceblue;
+  font-size: 1.2rem;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.counter{
+  display:inline;
 }
-
-.App-link {
-  color: #61dafb;
+.counter span{
+  font-size:1.1rem;
+  color:aliceblue;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.innerArea{
+  background-color: blueviolet;
+  padding: 1rem 1rem 1.5rem 1rem;
+  border-radius: 8px;
+  margin-top:1.5rem;
+}
+body{
+  background-color: #ddcf0c;
+background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+p{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size:1.2rem;
 }
