@@ -1,10 +1,60 @@
+body{
+  background-color: green;
+  transition-property:background-color;
+  transition-duration: 0.7s;
+  background-image:url(https://www.transparenttextures.com/patterns/brick-wall-dark.png);
+}
 .typeapp_1_div{
-  background-color: red;
-  background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
-  width:80%;
+  background-color: rgb(255, 255, 255,0.17);
+
+  background-image: url("https://www.transparenttextures.com/patterns/buried.png");
+  width:80vw;
   margin: 10% auto 10% auto;
   border-radius: 10px;
   padding: 3%;
+  transition-property:background-color;
+  transition-duration: 0.4s;
+}
+.form-control{
+  transition-property:background-color;
+  transition-duration: 0.7s;
+}
+#pr{
+  margin-top: 1vh;
+  font-size:2.5vh;
+  color: rgb(21, 233, 197);
+  font-weight: bold;
+}
+.progress{
+  background-color: rgba(255, 228, 196, 0.04);
+  /* bisque; */
+  width: 0%;
+  height: 2.4vh;
+  /* padding: 1.2vh 0 1.2vh 0; */
+  transition-property:width;
+  transition-duration: 0.3s;
+ 
+}
+.progress hr{
+    width: 100%;
+    margin:auto 0.3vw auto 0.4vw;
+    border-top: 3px dashed white;
+  
+}
+.progress .hrleft{
+  margin:auto 1px auto 0.4vw;
+}
+.progress .hrRight{
+  margin:auto 0.3vw auto 1px;
+}
+
+.per{
+  font-weight: bold;
+  color: white;
+  font-size: 1.7vh;
+}
+.bott{
+  margin: 10px 5px 0px 3px;
 }
 .bt{
   margin-top: 20px ;
@@ -13,27 +63,47 @@
   float:right;
   margin-right: 3px;
   color:aliceblue;
-  font-size: 1.2rem;
 }
+
 .counter{
   display:inline;
+  
 }
 .counter span{
-  font-size:1.1rem;
+  font-size:2.1vh;
   color:aliceblue;
 }
 .innerArea{
-  background-color: blueviolet;
+  background-color: #a6c712;
   padding: 1rem 1rem 1.5rem 1rem;
   border-radius: 8px;
   margin-top:1.5rem;
+  transition-property:background-color;
+  transition-duration: 0.5s;
 }
-body{
-  background-color: #ddcf0c;
-background-image: url("https://www.transparenttextures.com/patterns/arabesque.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-}
-p{
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+.p{
   font-size:1.2rem;
 }
+
+.p span{
+  font-family: 'Josefin Sans', sans-serif;
+  padding-top: 0.7vh ;
+  padding-bottom: 0.4vh;
+  background-color: transparent;
+}
+.tb{
+  margin-right: 1.5vh;
+}
+.flexbtn{
+  display: flex;
+  justify-content: space-between;
+}
+/* .btnRight{
+  width: 10vw;
+  overflow: hidden;
+}
+.btnLeft{
+  width: 10vw;
+  overflow: hidden;
+} */

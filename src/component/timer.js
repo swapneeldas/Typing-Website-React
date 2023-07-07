@@ -1,9 +1,14 @@
-import React,{useState} from 'react';
-function timer(){
-    let[time,setTime]=useState(0);
-    function starttimer(){
-        setInterval(() => {
-            setTime((pre)=>{pre+1})
-        }, 1000);
-    }
+import React from 'react';
+let date;
+function gettime(){
+  return Math.floor((new Date()-date)/1000);
 }
+
+function setT(setTime,id){
+  date=new Date();
+  setTime(0);
+  id.current=setInterval(()=>{
+    setTime(gettime())
+  },1000)
+}
+export default setT;
