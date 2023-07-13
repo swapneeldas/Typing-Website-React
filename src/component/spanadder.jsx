@@ -1,7 +1,6 @@
 import React from "react";
 import { correct, incorrect, done } from "./textColor";
-function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,setTime,wdone,input,switchanger,cor,previousrace,setpreviousrace,racingprev,setracingprev,time,doneper,speed
-) 
+function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone,input,switchanger,cor,time,setcantryagain,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,racingprev,racecompleted) 
 {
   //done
   if (index < white) {
@@ -14,40 +13,69 @@ function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,setTi
     }
     return <span style={done}>{ch}</span>;
    }
-    else if ( input[index - white] === users[index] && white + input.length - 1 <= index &&cor.current !== false) {
+    else if ( input[index - white] === users[index] && white + input.length - 1 <= index && cor.current !== false) {
     if (white + input.length === users.length) {
+      setcantryagain(true);
       wdone(index + 1);
       inputext("");
       switchanger(false);
-      clearInterval(id.current);
+      // clearInterval(id.current);
       scoreset("Your typing speed is:");
       setdisable(true);
+      if(racingprev){
+        TimeRaceFinished.current=time;
+      }
+      else{
+        clearInterval(id.current);
+      }
       //collecting last race data for try agian race
-      let donetime={ white:users.split("").length,time:time}
-      console.log(users.split("").length)
-      setpreviousrace([...previousrace,donetime]);
-      if(speed.current[0]===0 && speed.current[1]===0){
-        speed.current[1]=Math.round(((users.split("").length / time) * 60) / 5);
-        speed.current[0]=Math.round(((users.split("").length / time) * 60) / 5);
+      let donetime={ white:users.split("").length,time:time};
+      previousRaces.current=[...previousRaces.current,donetime];
+      lastSpeed.current=Math.round(((users.split("").length / time) * 60) / 5);
+      console.log(lastSpeed.current);
+  
+      
+      //try again functionality data
+      //first race
+      // if(racingPrev)
+      if(lastRaceIndex.current===0){
+        lastRaceIndex.current={time:previousRaces.current[previousRaces.current.length-1].time,
+                               index:(previousRaces.current.length-1)
+                              };
+        console.log("first race");
+        console.log(`first race this is last race data ${lastRaceIndex.current.index+1}`)
       }
-      else if(speed.current[0]!==0 && speed.current[1]!==0){
-        if(speed.current[0]>speed.current[1]){
-          speed.current[1]=Math.round(((users.split("").length / time) * 60) / 5);        
-        }
-        else if(speed.current[0]<=speed.current[1]){
-          speed.current[0]=speed.current[1];
-          speed.current[1]=Math.round(((users.split("").length / time) * 60) / 5);
-          console.log("this got tab")
-        }
+      else{
+        racecompleted.current=true;
       }
+      // // which should at the end of 2nd try again race 
+      // else{                
+      //   if(lastRaceIndex.current.time<previousRaces.current[previousRaces.current.length-1].time){
+      //     previousRaces.current=previousRaces.current.slice(0,lastRaceIndex.current.index+1)
+      //     console.log("current race speed is slower than previous race got hit");
+      //   }
+      // //   //if second speed is fater than first try again speed.
+      //   else if(lastRaceIndex.current.time>previousRaces.current[previousRaces.current.length-1].time){
+      //     previousRaces.current=previousRaces.current.slice(lastRaceIndex.current.index+1,previousRaces.current.length)
+      //     lastRaceIndex.current={time:previousRaces.current[previousRaces.current.length-1].time,index:(previousRaces.current.length-1)};
+      //     console.log("current race speed is faster than previous race got hit");
+      //   }
+      //   else{
+      //     previousRaces.current=previousRaces.current.slice(0,lastRaceIndex.current.index+1);
+      //     console.log("else part got trigger")
+      //   }
+      // }
     }
     if (users[index] === " ") {
       wdone(index + 1);
       inputext("");
-      //collecting race data for try agian race
+      //collecting previous race data
+      console.log("space is hit")
       let donetime={ white:white,time:time}
-      setpreviousrace([...previousrace,donetime]);
-    }
+      // previousRaces.current.push(donetime);
+      previousRaces.current=[...previousRaces.current,donetime];
+
+  }
     if (index === 0) {
       return (
         <span style={{...correct,paddingLeft: "0.3vw",borderRadius: "5px 0px 0px 5px"}}>{ch}</span>

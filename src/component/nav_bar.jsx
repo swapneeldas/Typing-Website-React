@@ -31,7 +31,7 @@ function Navbar(props) {
           <div className="nav-item d-flex "style={{paddingRight:"10px"}}>
           <div className="nav-item">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1NdwQHpqwyAxobeRGSbbaMWMQLOhE3loPuA&usqp=CAU"
+            src="https://static.vecteezy.com/system/resources/thumbnails/002/534/006/small/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg"
             className="rounded-circle z-depth-0"
             alt="avatar"
             height="40"
@@ -39,7 +39,7 @@ function Navbar(props) {
           />
           </div>
           
-          <table className={`tb text-${(props.mode === 'light' ? 'dark' : 'light')}`}><tbody><tr><td colSpan={2} style={{"marginBottom":"50px"}}>korean girl</td></tr><tr ><td style={{paddingRight:"5px"}}>50 WPM</td><td >5000 races</td></tr></tbody></table>
+          <table className={`tb text-${(props.mode === 'light' ? 'dark' : 'light')}`}><tbody><tr><td colSpan={2} style={{"marginBottom":"50px"}}>Profile</td></tr><tr ><td style={{paddingRight:"5px"}}>50 WPM</td><td >5000 races</td></tr></tbody></table>
           <div className="form-check form-switch bott">
             <input
               className="form-check-input"
