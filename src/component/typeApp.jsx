@@ -19,7 +19,7 @@ function Typing(probs) {
       let percent={
         width:`${doneper}%`,
       }
-  const url = "http://api.quotable.io/random";
+  const url = "https://api.quotable.io/random";
   const fetchUserData = async () => {
     let p =await fetch(url);
     let parsedData=await p.json()
