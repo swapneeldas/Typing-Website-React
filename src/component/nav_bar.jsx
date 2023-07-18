@@ -8,7 +8,7 @@ function Navbar(props) {
   }
   // (props.mode === 'light' ? {light} : {dark})
   return (
-    <nav className={"navbar navbar-expand-lg" } style={(props.mode === 'light' )? light :dark}>
+    <nav className={"navbar navbar-expand-lg navbar-dark" } style={(props.mode === 'light' )? light :dark}>
       <div className="container-fluid">
         <a className={`navbar-brand text-${(props.mode === 'light') ? 'dark' : 'light'}`} href="/">
           <strong>Typer</strong>
@@ -35,7 +35,7 @@ function Navbar(props) {
             className="rounded-circle z-depth-0"
             alt="avatar"
             height="40"
-            style={{margin:"7px 10px 0px 10px"}}
+            style={{margin:"3px 10px 0px 10px"}}
           />
           </div>
           

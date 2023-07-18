@@ -19,7 +19,6 @@ function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone
       wdone(index + 1);
       inputext("");
       switchanger(false);
-      // clearInterval(id.current);
       scoreset("Your typing speed is:");
       setdisable(true);
       if(racingprev){
@@ -31,46 +30,24 @@ function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone
       //collecting last race data for try agian race
       let donetime={ white:users.split("").length,time:time};
       previousRaces.current=[...previousRaces.current,donetime];
-      lastSpeed.current=Math.round(((users.split("").length / time) * 60) / 5);
-      console.log(lastSpeed.current);
-  
-      
+      lastSpeed.current=Math.round(((users.split("").length / time) * 60) / 5);   
       //try again functionality data
       //first race
-      // if(racingPrev)
       if(lastRaceIndex.current===0){
         lastRaceIndex.current={time:previousRaces.current[previousRaces.current.length-1].time,
                                index:(previousRaces.current.length-1)
                               };
-        console.log("first race");
-        console.log(`first race this is last race data ${lastRaceIndex.current.index+1}`)
+        clearInterval(id.current);
       }
       else{
         racecompleted.current=true;
       }
-      // // which should at the end of 2nd try again race 
-      // else{                
-      //   if(lastRaceIndex.current.time<previousRaces.current[previousRaces.current.length-1].time){
-      //     previousRaces.current=previousRaces.current.slice(0,lastRaceIndex.current.index+1)
-      //     console.log("current race speed is slower than previous race got hit");
-      //   }
-      // //   //if second speed is fater than first try again speed.
-      //   else if(lastRaceIndex.current.time>previousRaces.current[previousRaces.current.length-1].time){
-      //     previousRaces.current=previousRaces.current.slice(lastRaceIndex.current.index+1,previousRaces.current.length)
-      //     lastRaceIndex.current={time:previousRaces.current[previousRaces.current.length-1].time,index:(previousRaces.current.length-1)};
-      //     console.log("current race speed is faster than previous race got hit");
-      //   }
-      //   else{
-      //     previousRaces.current=previousRaces.current.slice(0,lastRaceIndex.current.index+1);
-      //     console.log("else part got trigger")
-      //   }
-      // }
+      
     }
     if (users[index] === " ") {
       wdone(index + 1);
       inputext("");
       //collecting previous race data
-      console.log("space is hit")
       let donetime={ white:white,time:time}
       // previousRaces.current.push(donetime);
       previousRaces.current=[...previousRaces.current,donetime];
@@ -113,38 +90,3 @@ function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone
   }
 }
 export default AddDataSpan2;
-
-// function addDataSpan2(ch,index){
-//   if(index<white){
-//     return (<span className="left-cornor" style={done}>{ch}</span>);
-//   }
-//   else if((input[index-white]===users[index] && (white+input.length-1)<=index )&& cor.current!==false){
-//     if((white+input.length)===users.length){
-//       wdone(index+1)
-//       inputext("")
-//       switchanger(false);
-//       clearInterval(id.current);
-//       scoreset("Your typing speed is:")
-//       setdisable(true);
-//       setTime((pre)=>{
-//         return(Math.round((users.split("").length/pre)*60/5));});
-//     }
-//     if(users[index]===' ' ){
-//       wdone(index+1);
-//       inputext("");
-//     }
-//     return (<span style={correct}>{ch}</span>)
-//   }
-//   else if((input[index-white]!==users[index] || cor.current===false) && ((white+input.length-1)>=index)){
-//     cor.current=false;
-
-//     return (<span style={incorrect}>{ch}</span>);
-//   }
-//   else if(cor.current=true && index<=(white+(input.length-1))){
-
-//     return (<span style={correct}>{ch}</span>);
-//   }
-//   else {
-//     return (<span>{ch}</span>)
-//   }
-// }

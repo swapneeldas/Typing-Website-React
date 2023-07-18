@@ -1,3 +1,7 @@
+*{
+  margin: 0;
+  padding: 0;
+}
 body{
   background-color: green;
   transition-property:background-color;
@@ -20,17 +24,17 @@ body{
   transition-duration: 0.7s;
 }
 #pr{
-  margin-top: 1vh;
-  font-size:2.5vh;
+  margin-top: 5px;
+  font-size:1.7rem;
   color: rgb(21, 233, 197);
   font-weight: bold;
 }
 .progress{
-  background-color: rgba(255, 228, 196, 0.04);
-  /* bisque; */
+  background-color: rgba(255, 228, 196, 0.06);
   width: 0%;
-  height: 2.4vh;
+  height: 1.6rem;
   /* padding: 1.2vh 0 1.2vh 0; */
+  margin: 5px 0 2px 0;
   transition-property:width;
   transition-duration: 0.3s;
  
@@ -51,13 +55,14 @@ body{
 .per{
   font-weight: bold;
   color: white;
-  font-size: 1.7vh;
+  font-size: 1rem;
 }
 .bott{
   margin: 10px 5px 0px 3px;
 }
 .bt{
   margin-top: 20px ;
+  width: 7vw;
 }
 .timer{
   float:right;
@@ -70,7 +75,7 @@ body{
   
 }
 .counter span{
-  font-size:2.1vh;
+  font-size: 1.2rem;
   color:aliceblue;
 }
 .innerArea{
@@ -99,11 +104,27 @@ body{
   display: flex;
   justify-content: space-between;
 }
-/* .btnRight{
-  width: 10vw;
-  overflow: hidden;
+.identifier{
+  width: 15rem;
+  display: grid;
+  place-items: center;
 }
-.btnLeft{
-  width: 10vw;
-  overflow: hidden;
-} */
+
+@media only screen and (max-width: 1800px) {
+  .bt{
+    width: 12vw;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .bt{
+    width: 20vw;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .bt{
+    width: 30vw;
+  }
+  .identifier{
+    width: 25rem;
+  }
+}
