@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Typing-website-React/static/css/main.3f451cc1.css",
-    "main.js": "/Typing-website-React/static/js/main.c29eb2af.js",
-    "static/js/787.33a00ed2.chunk.js": "/Typing-website-React/static/js/787.33a00ed2.chunk.js",
-    "index.html": "/Typing-website-React/index.html",
-    "main.3f451cc1.css.map": "/Typing-website-React/static/css/main.3f451cc1.css.map",
-    "main.c29eb2af.js.map": "/Typing-website-React/static/js/main.c29eb2af.js.map",
-    "787.33a00ed2.chunk.js.map": "/Typing-website-React/static/js/787.33a00ed2.chunk.js.map"
+    "main.css": "/Typing-Website-React/static/css/main.3f451cc1.css",
+    "main.js": "/Typing-Website-React/static/js/main.1d12497a.js",
+    "static/js/787.33a00ed2.chunk.js": "/Typing-Website-React/static/js/787.33a00ed2.chunk.js",
+    "index.html": "/Typing-Website-React/index.html",
+    "main.3f451cc1.css.map": "/Typing-Website-React/static/css/main.3f451cc1.css.map",
+    "main.1d12497a.js.map": "/Typing-Website-React/static/js/main.1d12497a.js.map",
+    "787.33a00ed2.chunk.js.map": "/Typing-Website-React/static/js/787.33a00ed2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3f451cc1.css",
-    "static/js/main.c29eb2af.js"
+    "static/js/main.1d12497a.js"
   ]
 }
