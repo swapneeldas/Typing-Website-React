@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { correct, incorrect, done } from "./textColor";
-function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone,input,switchanger,cor,time,setcantryagain,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,racingprev,racecompleted) 
+import Context from "../Context/Context";
+function AddDataSpan2(ch,index,users,inputext,id,scoreset,setdisable,wdone,input,switchanger,cor,time,setcantryagain,lastSpeed,lastRaceIndex,TimeRaceFinished,racingprev,racecompleted) 
 {
+  let context=useContext(Context);
+  let{userdata,setuserdata,currenttime,white,previousRaces,updateUserData}=context;
+
   //done
   if (index < white) {
     if (index === 0) {
@@ -19,13 +23,23 @@ function AddDataSpan2(ch,index,users,white,inputext,id,scoreset,setdisable,wdone
       wdone(index + 1);
       inputext("");
       switchanger(false);
-      scoreset("Your typing speed is:");
+      scoreset("Race ended in:");
       setdisable(true);
       if(racingprev){
         TimeRaceFinished.current=time;
       }
       else{
         clearInterval(id.current);
+        let wpmraces=userdata.wpm;
+        let a =0;
+        for(let i=0;i<wpmraces.length;i++){
+          a=a+wpmraces[i];
+        }
+        a=a+Math.round((((index + 1)/currenttime)*60)/5)
+        a=Math.round(a/(wpmraces.length+1))
+        setuserdata({...userdata,["wpm"]:[...userdata.wpm,Math.round((((index + 1)/currenttime)*60)/5)],["NoofRaces"]:(userdata.NoofRaces+1),["races"]:[...userdata.races,previousRaces],["averageSpeed"]:a})
+        updateUserData({NoofRaces:userdata.NoofRaces+1,races:[...userdata.races,previousRaces],wpm:[...userdata.wpm,Math.round((((index + 1)/currenttime)*60)/5)]});
+        
       }
       //collecting last race data for try agian race
       let donetime={ white:users.split("").length,time:time};

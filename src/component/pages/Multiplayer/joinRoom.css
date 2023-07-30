@@ -1,0 +1,24 @@
+.join{
+    background-color: blue;
+    display: grid;
+    place-items: center;
+}
+.JoinOption{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.joinoptionbt{
+    width: 200px;
+    height: 200px;
+    margin: 200px 50px 50px 50px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.3rem;
+
+}
+.create{
+ background-color: red;
+ display: grid;
+ place-items: center;
+}

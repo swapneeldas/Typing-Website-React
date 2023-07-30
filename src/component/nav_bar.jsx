@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import {Link} from "react-router-dom";
+import Context from "../Context/Context";
 function Navbar(props) {
+  let context=useContext(Context);
+  let { logedin,setlogedin,userdata}=context;
   const light={
     backgroundColor:'rgba(20, 196, 20, 0.3)',
   }
@@ -7,6 +11,10 @@ function Navbar(props) {
     backgroundColor: 'rgba(52, 52, 52, 0.5)'
   }
   // (props.mode === 'light' ? {light} : {dark})
+  let Logout=()=>{
+    localStorage.removeItem('token');
+    setlogedin(false)
+  }
   return (
     <nav className={"navbar navbar-expand-lg navbar-dark" } style={(props.mode === 'light' )? light :dark}>
       <div className="container-fluid">
@@ -26,21 +34,32 @@ function Navbar(props) {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-     
+        <li className="nav-item active">
+        <Link className="nav-link" to="/">Home</Link>
+      </li>
      </ul>
           <div className="nav-item d-flex "style={{paddingRight:"10px"}}>
           <div className="nav-item">
-          <img
+        
+          </div>
+          {(logedin)?(
+            <>
+           <Link to="/profile"><img
             src="https://static.vecteezy.com/system/resources/thumbnails/002/534/006/small/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg"
             className="rounded-circle z-depth-0"
             alt="avatar"
             height="40"
             style={{margin:"3px 10px 0px 10px"}}
-          />
-          </div>
-          
-          <table className={`tb text-${(props.mode === 'light' ? 'dark' : 'light')}`}><tbody><tr><td colSpan={2} style={{"marginBottom":"50px"}}>Profile</td></tr><tr ><td style={{paddingRight:"5px"}}>50 WPM</td><td >5000 races</td></tr></tbody></table>
-          <div className="form-check form-switch bott">
+          /></Link>
+          <table className={`tb text-${(props.mode === 'light' ? 'dark' : 'light')}`}><tbody><tr><td colSpan={2} style={{"marginBottom":"50px"}}>{userdata.name}</td></tr><tr ><td style={{paddingRight:"5px"}}>{userdata.averageSpeed} WPM</td><td >{userdata.NoofRaces} races</td></tr></tbody></table>
+          <button type="button" className="btn btn-primary mx-1 btn-sm" onClick={Logout}>Logout</button>
+          </>)
+          :(<div>
+          <Link to="/login"><button type="button" className="btn btn-primary mx-1">LogIn</button></Link>
+          <Link to="/Signin"><button type="button" className="btn btn-primary ">SignUp</button></Link>
+          </div>)
+          }
+          <div className="form-check form-switch bott">  
             <input
               className="form-check-input"
               type="checkbox"
@@ -48,6 +67,8 @@ function Navbar(props) {
               id="flexSwitchCheckDefault"
               onClick={props.tog}
             />
+
+
             <label
               className={`form-check-label text-${
                 props.mode === "light" ? "dark" : "light"

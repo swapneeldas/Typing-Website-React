@@ -1,5 +1,6 @@
 import React, { useState,useRef} from 'react';
 import Context from './Context';
+import setT from '../component/timer';
 const Statecontext = (props) => {
 
     const [users, setUsers] = useState("The text will be here"); //contains text
@@ -11,6 +12,8 @@ const Statecontext = (props) => {
     const [doneper, donechange] = useState(0);//conaining what percentage is done
     let cor = useRef();//using to keep track if their is any wrong letter given
     let id = useRef();//containing refference of the interval id to stop or start timer
+    const [StartingCounter,setStartingCounter]=useState(0);
+    let startingCounterRef=useRef();
     // this hooks are used in for try again feature{
     let lastSpeed = useRef();//keeping last speed 
     let lastRaceIndex = useRef(0);//keeping track of last index where the last race ended 
@@ -22,13 +25,122 @@ const Statecontext = (props) => {
     let racecompleted = useRef(false);//keeping track if the race is completed
     const [racingprev, setracingprev] = useState(false);//true if we try again
     const [prevwidth, setprevwidth] = useState({ width: 0, white: 0 });//calculating width from the white and keeping track of no of white done at that time in previous race
+    //fetching text
+    const url = "https://api.quotable.io/random";
+    const fetchUserData = async () => {
+      let p =await fetch(url);
+      let parsedData=await p.json()
+      setUsers(parsedData.content);
+    };
+    //handle Start function with counter
+    async function handleStart(){
+        scoreset("Race starts in");
+        setStartingCounter(3);
+        wdone(0);
+        await fetchUserData();
+        startingCounterRef.current=setInterval(()=>{
+            setStartingCounter((prev)=>{return(prev-1)})
+        },1000);
+        setTimeout(async()=>{
+           setdisable(false);
+           clearInterval(startingCounterRef.current);
+           setStartingCounter(0);
+           //handle Click Code
+           racecompleted.current=false;
+           setcantryagain(false);
+           setracingprev(false);
+           if(timer===false){
+           scoreset("Race Started");
+           switchanger(true);
+           setT(setTime,id);
+           previousRaces.current=[{white:0,time:0}];
+           lastSpeed.current=0;
+           lastRaceIndex.current=0;
+           setTimeout(()=>{
+            datainput.current.focus();
+           },0)
+           
+         }
+           else{
+             switchanger(false);
+             clearInterval(id.current);
+           }
+        },3000)
+    }
+    //handle try again 
+    async function tryclick(){
+        scoreset("Race starts in");
+        setStartingCounter(3);
+        wdone(0);
+        startingCounterRef.current=setInterval(()=>{
+            setStartingCounter((prev)=>{return(prev-1)})
+        },1000);
+        setTimeout(async()=>{
+            racecompleted.current=false;
+            clearInterval(startingCounterRef.current);
+            wdone(0);
+            setcantryagain(false);
+            setdisable(false);
+            scoreset("The Counter will be starting here");
+            switchanger(true);
+            setT(setTime,id);
+            setTimeout(()=>{ datainput.current.focus()},0)
+           
+         },3000)
+    }
 
+    //login part
+    let [logedin,setlogedin]=useState(false);
+    //setting logedin data
+    let [userdata,setuserdata]=useState({name:"",averageSpeed:"",NoofRaces:""});
+
+    async function fetchuserdata(){
+        console.log("Inside fetchuser")
+        const response = await fetch("http://localhost:5000/api/auth/getuserdata", {
+            method: "POST", 
+            headers: {
+              "Content-Type": "application/json",
+              "authToken": localStorage.getItem("token")
+            },
+          
+          });
+          const json=await response.json();
+          console.log(json)
+          if(json.success!== false){
+          let b=json.wpm;
+          let a=0;
+          let c=0;
+          if(b.length){
+          for(let i=0;i<b.length;i++){
+            a=a+b[i];
+          }
+          c=Math.round(a/b.length)
+        }
+        
+          setuserdata({name:json.Name,averageSpeed:c,NoofRaces:json.NoofRaces,wpm:b,races:json.races})
+        }
+    }
+
+    async function updateUserData(data){
+      const response = await fetch(`http://localhost:5000/api/data/update`, {
+        method: "PUT",  
+        headers: {
+          "Content-Type": "application/json",
+          "authToken": localStorage.getItem("token")
+        },
+        body: JSON.stringify({...data}), 
+      });
+      const json=await response.json();
+      console.log(json)
+    }
     return (
         <Context.Provider value=
         {{users,setUsers,timer,switchanger,currenttime,setTime,input,inputext,disable,setdisable,
         score,scoreset,doneper,donechange,cor,id,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,
         cantryagain,setcantryagain,datainput,white,wdone,racecompleted,racingprev,setracingprev,prevwidth,
-        setprevwidth}}>
+        setprevwidth,handleStart,StartingCounter,tryclick,
+        logedin,setlogedin,fetchuserdata,userdata,setuserdata,updateUserData
+        }}>
             {props.children}
         </Context.Provider>
     )

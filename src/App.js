@@ -1,8 +1,19 @@
 import "./App.css";
+import "./index.css";
 import Type from "./component/typeApp";
 import Nav from "./component/nav_bar";
-import React, { useState } from "react";
-function App() {
+import React, { useEffect, useState } from "react";
+import EntryPage from "./component/pages/EntryPage";
+import Login from "./component/pages/Login";
+import Signin from "./component/pages/Signin";
+import JoinRoom from "./component/pages/Multiplayer/joinRoom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Profile from "./component/pages/Profile";
+function App(){
   let [mode, setmode] = useState("light");
   function toggle() {
     if (mode === "light") {
@@ -14,10 +25,19 @@ function App() {
     }
   }
   return (
-    <div>
+      <Router>
       <Nav mode={mode} tog={toggle} />
-      <Type mode={mode} />
+    <div>
+    <Routes>
+    <Route exact path='/' element={<EntryPage/>}/>
+    <Route exact path='/SinglePlayer' element={<Type mode={mode}/>}/>
+    <Route exact path='/login' element={<Login/>}/>
+    <Route exact path='/Signin' element={<Signin/>}/>
+    <Route exact path="/profile" element={<Profile/>}/>
+    <Route exact path="/joinRoom" element={<JoinRoom/>}/>
+    </Routes>
     </div>
+      </Router>
   );
 }
 

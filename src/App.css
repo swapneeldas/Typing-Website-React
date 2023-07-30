@@ -9,7 +9,8 @@ body{
   background-image:url(https://www.transparenttextures.com/patterns/brick-wall-dark.png);
 }
 .typeapp_1_div{
-  background-color: rgb(255, 255, 255,0.17);
+  /* background-color: rgb(255, 255, 255,0.17); */
+  background-color: rgba(20, 4, 4, 0.288);
 
   background-image: url("https://www.transparenttextures.com/patterns/buried.png");
   width:80vw;

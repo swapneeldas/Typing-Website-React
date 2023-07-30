@@ -1,4 +1,3 @@
-import React from 'react';
 let date;
 function gettime(){
   return Math.floor((new Date()-date)/1000);

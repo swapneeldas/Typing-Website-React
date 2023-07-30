@@ -2,13 +2,13 @@ import React, {useEffect, useContext} from "react";
 import {white_inner,TextArea,secound_inner} from "./textColor";
 import AddDataSpan2 from "./spanadder";
 import Context from "../Context/Context";
-import setT from "./timer";
+
 function Typing(probs) {
   let context=useContext(Context);
   let {users,setUsers,timer,switchanger,currenttime,setTime,input,inputext,disable,setdisable,
     score,scoreset,doneper,donechange,cor,id,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,
     cantryagain,setcantryagain,datainput,white,wdone,racecompleted,racingprev,setracingprev,prevwidth,
-    setprevwidth}=context
+    setprevwidth,handleStart,StartingCounter,tryclick}=context
 
     cor.current=true;
     useEffect(
@@ -19,46 +19,16 @@ function Typing(probs) {
       let percent={
         width:`${doneper}%`,
       }
-  const url = "https://api.quotable.io/random";
-  const fetchUserData = async () => {
-    let p =await fetch(url);
-    let parsedData=await p.json()
-    setUsers(parsedData.content);
-  };
+
  //This punction will be triggered when start will be clicked
   async function handleClick(event){
-    racecompleted.current=false;
-    setcantryagain(false);
-    setracingprev(false);
-    wdone(0);
     event.preventDefault();
-    if(timer===false){
-    setdisable(false);
-    scoreset("The Counter will be starting here");
-    await fetchUserData();
-    switchanger(true);
-    setT(setTime,id);
-    datainput.current.focus();
-    previousRaces.current=[{white:0,time:0}];
-    lastSpeed.current=0;
-    lastRaceIndex.current=0;
-  }
-    else{
-      switchanger(false);
-      clearInterval(id.current);
-    }
+    handleStart(event);
   }
   //This function will be triggered when tryagain button will be clicked
   async function handleTryClick(e){
-    racecompleted.current=false;
     e.preventDefault();
-    wdone(0);
-    await setcantryagain(false);
-    await setdisable(false);
-    scoreset("The Counter will be starting here");
-    switchanger(true);
-    setT(setTime,id);
-    datainput.current.focus();
+    tryclick();
   }
 
   function change(event){
@@ -103,7 +73,7 @@ function Typing(probs) {
     <div className="typeapp_1_div" style={(probs.mode === 'light' )? null :white_inner}>
       <div className="counter">
         <span>{score}</span>
-        <span className="timer">: {(score==="The Counter will be starting here")?currenttime:lastSpeed.current}</span>
+        <span className="timer">: {(score==="Race starts in")?StartingCounter:currenttime}</span>
       </div>
       <p id="pr">Progress{".".repeat(currenttime%6)}</p>
       <div style={(!racingprev)?{display:"none"}:null}>
@@ -123,7 +93,8 @@ function Typing(probs) {
       <div className="identifier">
       <p className="per">You</p>
       </div>
-      <hr className="hrleft"/><p className="per" style={(doneper<20)?{display:"none"}:null}>{(doneper===100 && racingprev)?Math.round(((white/TimeRaceFinished.current)*60)/5):Math.round(((white/currenttime)*60)/5)}wpm</p>
+      {/* Math.round(((white/TimeRaceFinished.current)*60)/5) */}
+      <hr className="hrleft"/><p className="per" style={(doneper<20)?{display:"none"}:null}>{(doneper===100 && racingprev)?null:Math.round(((white/currenttime)*60)/5)}wpm</p>
       <hr className="hrRight"/>
       <p className="per">{doneper}%</p>
       </div>
@@ -132,7 +103,7 @@ function Typing(probs) {
       <form>
         <div className="form-group">
           <div className="innerArea" style={(probs.mode === 'light' )? null :secound_inner}>
-            <p className="p" >{users.split("").map((data,index)=>{return AddDataSpan2(data,index,users ,white,inputext,id,scoreset,setdisable,wdone,input,switchanger,cor,currenttime,setcantryagain,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,racingprev,racecompleted)})}</p>
+            <p className="p" >{users.split("").map((data,index)=>{return AddDataSpan2(data,index,users ,inputext,id,scoreset,setdisable,wdone,input,switchanger,cor,currenttime,setcantryagain,lastSpeed,lastRaceIndex,TimeRaceFinished,racingprev,racecompleted)})}</p>
             <input 
               type="textArea"
               value={input}
