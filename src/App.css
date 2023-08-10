@@ -106,11 +106,13 @@ body{
   justify-content: space-between;
 }
 .identifier{
-  width: 15rem;
+  width: 10rem;
   display: grid;
   place-items: center;
 }
-
+.flex-name{
+  display: flex;
+}
 @media only screen and (max-width: 1800px) {
   .bt{
     width: 12vw;

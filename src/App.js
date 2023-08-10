@@ -31,6 +31,7 @@ function App(){
     <Routes>
     <Route exact path='/' element={<EntryPage/>}/>
     <Route exact path='/SinglePlayer' element={<Type mode={mode}/>}/>
+    <Route exact path="/MultiPlayer"  element={<Type mode={mode}/>}/>
     <Route exact path='/login' element={<Login/>}/>
     <Route exact path='/Signin' element={<Signin/>}/>
     <Route exact path="/profile" element={<Profile/>}/>

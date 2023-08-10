@@ -45,7 +45,7 @@ function Navbar(props) {
           {(logedin)?(
             <>
            <Link to="/profile"><img
-            src="https://static.vecteezy.com/system/resources/thumbnails/002/534/006/small/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg"
+            src={userdata.img}
             className="rounded-circle z-depth-0"
             alt="avatar"
             height="40"

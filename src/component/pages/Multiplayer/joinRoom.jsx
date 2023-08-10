@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./joinRoom.css";
-
-const joinRoom = () => {
+import Context from '../../../Context/Context';
+const JoinRoom = () => {
+    let context=useContext(Context)
+    let {socket,userdata}=context
     let [room,setroom]=useState(0);
     function joinRoom(){
         setroom(1);
@@ -9,7 +11,21 @@ const joinRoom = () => {
     function createRoom(){
         setroom(2);
     }
-  return (
+    let [roomcode,setroomcode]=useState("");
+
+    function Change(e){
+      setroomcode(e.target.value);
+      console.log(roomcode);
+    }
+    function JoinRoom(e){
+      e.preventDefault();
+      // console.log(roomcode);
+      // console.log(userdata);
+      socket.emit("join_room",{...userdata,room:roomcode});
+      // console.log(socket);
+      setroomcode("");
+    }
+    return (
       <div>
     
     <div className='JoinOption'>
@@ -23,9 +39,10 @@ const joinRoom = () => {
     <form>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Room ID</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={roomcode} onChange={(e)=>{
+      Change(e)}}/>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" onClick={(e)=>{JoinRoom(e)}}>Submit</button>
 </form>
     </div>)}
     { (room==2)&&(
@@ -42,4 +59,4 @@ const joinRoom = () => {
   )
 }
 
-export default joinRoom
+export default JoinRoom

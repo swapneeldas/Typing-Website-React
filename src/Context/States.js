@@ -1,6 +1,7 @@
-import React, { useState,useRef} from 'react';
+import React, { useState,useRef, useEffect} from 'react';
 import Context from './Context';
 import setT from '../component/timer';
+import {io} from 'socket.io-client';
 const Statecontext = (props) => {
 
     const [users, setUsers] = useState("The text will be here"); //contains text
@@ -34,6 +35,9 @@ const Statecontext = (props) => {
     };
     //handle Start function with counter
     async function handleStart(){
+        if(multiplayer===true && multiplayermode===1){
+          socket.emit("createNewroom",userdata);
+        }
         scoreset("Race starts in");
         setStartingCounter(3);
         wdone(0);
@@ -92,7 +96,7 @@ const Statecontext = (props) => {
     //login part
     let [logedin,setlogedin]=useState(false);
     //setting logedin data
-    let [userdata,setuserdata]=useState({name:"",averageSpeed:"",NoofRaces:""});
+    let [userdata,setuserdata]=useState({name:"",averageSpeed:"",NoofRaces:"",text:"",wpm:"",img:""});
 
     async function fetchuserdata(){
         console.log("Inside fetchuser")
@@ -117,7 +121,7 @@ const Statecontext = (props) => {
           c=Math.round(a/b.length)
         }
         
-          setuserdata({name:json.Name,averageSpeed:c,NoofRaces:json.NoofRaces,wpm:b,races:json.races})
+          setuserdata({name:json.Name,averageSpeed:c,NoofRaces:json.NoofRaces,wpm:b,races:json.races,text:json.text,wpmhistory:b,img:json.img})
         }
     }
 
@@ -133,13 +137,89 @@ const Statecontext = (props) => {
       const json=await response.json();
       console.log(json)
     }
+    //multiplayer States
+    //States required for multiplayer
+    let [room,setroom]=useState(-5);
+    let [multiplayer,setmultiplayer]=useState(false);
+    let [playerdata,setplayerdata]=useState([]);
+    let [socket,setsocket]=useState();
+    //multiplayermode be the mode player want to play
+    //not multiplayer null
+    //multiplayer random   0
+    //multiplayer join room 1
+    //multiplayer create room 2
+    let [multiplayermode,setmultiplayermode]=useState();
+    let [mystatus,setmystatus]=useState();
+    //connecting to socket
+    useEffect(()=>{
+      if(multiplayer===true){
+        setsocket(io.connect("http://localhost:3001"));
+        console.log("connected");
+      }
+    
+    },[multiplayer])
+
+
+    //update / change in data during race
+    useEffect(()=>{
+      if(multiplayer===true){
+        socket.on("join_room",(data)=>{
+          // setplayerdata([...playerdata,data]);
+          console.log(`The data received ${JSON.stringify(data)}`)
+          console.log(`set player data ${JSON.stringify(data.room)}`)
+          let playerData={Name:data.Name,done:0,wpm:0,status:data.PlayerStatus};
+          setplayerdata([...playerdata,playerData]);
+          setroom(parseInt(data.room));
+          console.log(`set player data ${data.status}`)
+        })
+        socket.on("setUpdatedData",(data)=>{
+          // {Name:data.Name,done:data.persentDone}
+          console.log(`Player State: ${playerdata}`)
+          let a=playerdata;
+          console.log(`player datas: ${JSON.stringify(a)}`)
+          console.log(`player datas recieved: ${JSON.stringify(data)}`)
+          let index= a.findIndex((x)=>{
+            return x.name===data.Name;
+          })
+          console.log(index);
+          // a=a[index].done=data.persentDone;
+          // setplayerdata(a);
+        })
+        socket.on("JoinedPlayers",(data)=>{
+          let filteredData=data.filter((obj)=>{return obj.Name!==userdata.name })
+          setplayerdata(filteredData);
+        })
+        socket.on("Anotherjoin",(data)=>{
+          console.log(`Another join data ${JSON.stringify(data)}`);
+          let a={
+            Name:data.Name,
+            done:0,
+            wpm:0,
+            status:data.status
+          }
+          setplayerdata([...playerdata,a]);
+        })
+        // {room,status:"Master"}
+        socket.on("join_room",(data)=>{
+          setroom(data.room);
+          setmystatus(data.status);
+        })
+
+      }
+    },[socket])
+
+
     return (
         <Context.Provider value=
         {{users,setUsers,timer,switchanger,currenttime,setTime,input,inputext,disable,setdisable,
         score,scoreset,doneper,donechange,cor,id,lastSpeed,lastRaceIndex,previousRaces,TimeRaceFinished,
         cantryagain,setcantryagain,datainput,white,wdone,racecompleted,racingprev,setracingprev,prevwidth,
         setprevwidth,handleStart,StartingCounter,tryclick,
-        logedin,setlogedin,fetchuserdata,userdata,setuserdata,updateUserData
+        logedin,setlogedin,fetchuserdata,userdata,setuserdata,updateUserData,
+        multiplayer,setmultiplayer,
+        playerdata,setplayerdata,
+        socket,room,setroom,
+        multiplayermode,setmultiplayermode
         }}>
             {props.children}
         </Context.Provider>
